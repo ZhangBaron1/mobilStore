@@ -31,10 +31,22 @@ ul{
   padding: 0;
   margin: 0;
 }
+img{
+  vertical-align: top;
+}
+html,body{
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
 #header{
   height: 103/@r;
   background: #ef3239;
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
   a{
       height: 88/@r;
       width: 128/@r;
@@ -73,19 +85,24 @@ ul{
   }
 #nav{
   width: 750/@r;
-  height: 104/@r;
+  height: 105/@r;
   background: #fdfdfd;
   border-top: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
-  line-height: 104/@r;
   box-sizing: border-box;
-  padding: 0 35/@r;
-  display:flex;
+  position: absolute;
+  top: 103/@r;
+  left: 0;
+  bottom: 0;
+  right: 0;
   a{
+    width: 25%;
+    height: 103/@r;
+    line-height: 103/@r;
+    float: left;
     color: #85878a;
     font-size: 35/@r;
     text-align: center;
-    flex:1;
   }
   .active{
     color: #f23838;
@@ -95,15 +112,19 @@ ul{
   }
   #n2 span{
     font-size: 18/@r;
-    position: relative;
   }
-  #n2 .glyphicon-chevron-up{
-    top: -12/@r;
-    left: 0;
-  }
-  #n2 .glyphicon-chevron-down{
-    top: 8/@r;
-    left: -18/@r;
+
+  #span_box{
+    display: inline-block;
+    width: 18/@r;
+    vertical-align: middle;
+    span{
+      float: left;
+    }
+    .glyphicon-chevron-down{
+      top: 0;
+      left: 0;
+    }
   }
 }
 .wrap{
@@ -115,7 +136,7 @@ ul{
   overflow: auto;
   li{
     overflow: hidden;
-    border-bottom: 2px solid #eee;
+    border-bottom: 1px solid #eee;
     padding: 30/@r 0;
   }
   li img{

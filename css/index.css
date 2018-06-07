@@ -30,10 +30,23 @@ ul {
   padding: 0;
   margin: 0;
 }
+img {
+  vertical-align: top;
+}
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
 #header {
   height: 2.06rem;
   background: #ef3239;
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
 }
 #header a {
   height: 1.76rem;
@@ -72,20 +85,25 @@ ul {
 }
 #nav {
   width: 15rem;
-  height: 2.08rem;
+  height: 2.1rem;
   background: #fdfdfd;
   border-top: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
-  line-height: 2.08rem;
   box-sizing: border-box;
-  padding: 0 0.7rem;
-  display: flex;
+  position: absolute;
+  top: 2.06rem;
+  left: 0;
+  bottom: 0;
+  right: 0;
 }
 #nav a {
+  width: 25%;
+  height: 2.06rem;
+  line-height: 2.06rem;
+  float: left;
   color: #85878a;
   font-size: 0.7rem;
   text-align: center;
-  flex: 1;
 }
 #nav .active {
   color: #f23838;
@@ -96,15 +114,18 @@ ul {
 }
 #nav #n2 span {
   font-size: 0.36rem;
-  position: relative;
 }
-#nav #n2 .glyphicon-chevron-up {
-  top: -0.24rem;
+#nav #span_box {
+  display: inline-block;
+  width: 0.36rem;
+  vertical-align: middle;
+}
+#nav #span_box span {
+  float: left;
+}
+#nav #span_box .glyphicon-chevron-down {
+  top: 0;
   left: 0;
-}
-#nav #n2 .glyphicon-chevron-down {
-  top: 0.16rem;
-  left: -0.36rem;
 }
 .wrap {
   position: absolute;
@@ -116,7 +137,7 @@ ul {
 }
 .wrap li {
   overflow: hidden;
-  border-bottom: 2px solid #eee;
+  border-bottom: 1px solid #eee;
   padding: 0.6rem 0;
 }
 .wrap li img {
