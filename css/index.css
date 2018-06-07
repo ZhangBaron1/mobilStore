@@ -1,0 +1,140 @@
+a,
+input,
+button {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+input,
+button {
+  -webkit-appearance: none;
+  border-radius: 0;
+}
+body {
+  margin: 0;
+  -webkit-user-select: none;
+}
+body * {
+  -webkit-user-select: none;
+  font-family: Helvetica;
+}
+body {
+  -webkit-text-size-adjust: 100%;
+}
+h1 {
+  margin: 0px;
+}
+a {
+  text-decoration: none;
+}
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+#header {
+  height: 2.06rem;
+  background: #ef3239;
+  position: relative;
+}
+#header a {
+  height: 1.76rem;
+  width: 2.56rem;
+  position: absolute;
+  top: 0.14rem;
+  text-align: center;
+  line-height: 1.76rem;
+}
+#header #task {
+  left: 0;
+}
+#header #task span {
+  font-size: 0.74rem;
+}
+#header h1 {
+  padding-top: 0.14rem;
+  text-align: center;
+  font-size: 0.78rem;
+  line-height: 1.76rem;
+  color: #fff;
+}
+#header h1 span {
+  font-size: 0.56rem;
+  margin-right: 0.32rem;
+}
+#header #refresh {
+  right: 0;
+}
+#header #refresh span {
+  font-size: 0.72rem;
+  line-height: 1.76rem;
+}
+#header span {
+  color: #fff;
+}
+#nav {
+  width: 15rem;
+  height: 2.08rem;
+  background: #fdfdfd;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  line-height: 2.08rem;
+  box-sizing: border-box;
+  padding: 0 0.7rem;
+  display: flex;
+}
+#nav a {
+  color: #85878a;
+  font-size: 0.7rem;
+  text-align: center;
+  flex: 1;
+}
+#nav .active {
+  color: #f23838;
+}
+#nav #n1 span,
+#nav #n3 span {
+  font-size: 0.76rem;
+}
+#nav #n2 span {
+  font-size: 0.36rem;
+  position: relative;
+}
+#nav #n2 .glyphicon-chevron-up {
+  top: -0.24rem;
+  left: 0;
+}
+#nav #n2 .glyphicon-chevron-down {
+  top: 0.16rem;
+  left: -0.36rem;
+}
+.wrap {
+  position: absolute;
+  top: 4.16rem;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: auto;
+}
+.wrap li {
+  overflow: hidden;
+  border-bottom: 2px solid #eee;
+  padding: 0.6rem 0;
+}
+.wrap li img {
+  float: left;
+  width: 4.74rem;
+  height: 4.74rem;
+}
+.wrap li .fr {
+  float: right;
+  font-size: 0.56rem;
+  width: 9.52rem;
+  text-align: left;
+  line-height: 0.92rem;
+  color: #434343;
+}
+.wrap #price {
+  color: #f23838;
+}
+.wrap #good {
+  color: #808080;
+}
