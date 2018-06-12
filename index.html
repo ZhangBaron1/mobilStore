@@ -6,6 +6,7 @@
     <title>MobilStore</title>
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="bs/bootstrap.css">
+    <script type="text/javascript" src="m.Tween.js"></script>
     <script>
         (function(){
             var html = document.documentElement;
@@ -13,6 +14,94 @@
             html.style.fontSize = hWidth/15 + "px";
             console.log(html.style.fontSize)
         })()
+        document.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+        });
+        window.onload = function(){
+            var wrap = document.querySelector('.wrap');
+            mScroll({
+                el:wrap,
+                sBar:true
+            })
+        }
+        function mScroll(init){
+            if(!init.el)
+                return;
+            wrap = init.el;
+            var inner = wrap.children[0];
+            var dis = 0;
+            var startPoint = 0;
+            var startEl = 0;
+            var lastY = 0;
+            var lastDis = 0;
+            var lastTime = 0;
+            var lastTimeDis = 0;
+            if(init.sBar){
+                var scrollBar = document.createElement('div');
+                var scale = wrap.clientHeight / inner.offsetHeight;
+            }
+            var maxTranslate = wrap.clientHeight - inner.offsetHeight;
+            inner.style.minHeight="100%";
+            if(init.sBar){
+                scrollBar.style.cssText="width:6px;position:absolute;background:rgba(0,0,0,.5);right:0;top:0;border-radius:3px;opacity:0;";
+                wrap.appendChild(scrollBar);
+            }
+            css(inner,'translateZ',0.01);    // 开启3D硬件加速
+            inner.addEventListener('touchstart',function(e){
+                clearInterval(inner.timer);
+                startPoint = e.changedTouches[0].pageY;
+                startEl = css(inner,'translateY');
+                lastY = startEl;
+                lastTimeDis =  lastDis = 0;
+                lastTime = new Date().getTime();
+                if(init.sBar) {
+                    scale = wrap.clientHeight / inner.offsetHeight;
+                    scrollBar.style.height = scale * wrap.clientHeight + "px";
+                    scrollBar.style.opacity = 1;
+                }
+            });
+            inner.addEventListener('touchmove',function(e){
+                var nowPoint = e.changedTouches[0].pageY;
+                var nowTime = new Date().getTime();
+                dis = nowPoint - startPoint;
+                var moveY = startEl+dis;
+                css(inner,'translateY',moveY);
+                (init.sBar) && css(scrollBar,'translateY',-moveY*scale);
+                lastDis = moveY - lastY;
+                lastY = moveY;
+                lastTimeDis = nowTime - lastTime;
+                lastTime = nowTime;
+            });
+            inner.addEventListener('touchend',function(e){
+                //console.log(lastDis/lastTimeDis);
+                var type = "easeOut";
+                var speed =  Math.round(lastDis/lastTimeDis*20);
+                speed = lastTimeDis <= 0?0 :speed;
+                var target = Math.round(speed*10 + css(inner,"translateY"));
+                if(target > 0){
+                    target = 0;
+                    type = "backOut";
+                } else if(target < maxTranslate){
+                    target = maxTranslate;
+                    type = "backOut";
+                }
+                MTween({
+                    el:inner,
+                    target:{translateY:target},
+                    time:Math.round(Math.abs(target - css(inner,"translateY"))*2),
+                    type:type,
+                    callBack:function(){
+                        (init.sBar) && (scrollBar.style.opacity = 0);
+                    },
+                    callIn:function(){
+                        if(init.sBar){
+                            var move = css(inner,'translateY');
+                            css(scrollBar,'translateY',-move*scale);
+                        }
+                    }
+                });
+            });
+        }
     </script>
 </head>
 <body>
@@ -33,7 +122,7 @@
     <a id="n3" href="javascript:;">筛选 <span class="glyphicon glyphicon-filter"></span></a>
 </nav>
 <div class="wrap">
-    <ul>
+    <ul id="list">
         <li>
             <a href="javascript:;">
                 <img src="img/img.png" alt="">
@@ -71,6 +160,506 @@
                     <p>苹果（Apple）iPhone 6(A1586) <br>16GB 金色 移动联通电信4G手机</p>
                     <span id="price">￥3980.00<br></span>
                     <span id="good">好评96% 59091人</span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                <img src="img/img.png" alt="">
+                <div class="fr">
+                    <p>苹果（Apple）iPhone 6(A1586) <br>16GB 金色 移动联通电信4G手机</p>
+                    <span id="price">￥3888.00<br></span>
+                    <span id="good">好评88% 59531人</span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                <img src="img/img.png" alt="">
+                <div class="fr">
+                    <p>苹果（Apple）iPhone 6(A1586) <br>16GB 金色 移动联通电信4G手机</p>
+                    <span id="price">￥3888.00<br></span>
+                    <span id="good">好评88% 59531人</span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                <img src="img/img.png" alt="">
+                <div class="fr">
+                    <p>苹果（Apple）iPhone 6(A1586) <br>16GB 金色 移动联通电信4G手机</p>
+                    <span id="price">￥3888.00<br></span>
+                    <span id="good">好评88% 59531人</span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                <img src="img/img.png" alt="">
+                <div class="fr">
+                    <p>苹果（Apple）iPhone 6(A1586) <br>16GB 金色 移动联通电信4G手机</p>
+                    <span id="price">￥3888.00<br></span>
+                    <span id="good">好评88% 59531人</span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                <img src="img/img.png" alt="">
+                <div class="fr">
+                    <p>苹果（Apple）iPhone 6(A1586) <br>16GB 金色 移动联通电信4G手机</p>
+                    <span id="price">￥3888.00<br></span>
+                    <span id="good">好评88% 59531人</span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                <img src="img/img.png" alt="">
+                <div class="fr">
+                    <p>苹果（Apple）iPhone 6(A1586) <br>16GB 金色 移动联通电信4G手机</p>
+                    <span id="price">￥3888.00<br></span>
+                    <span id="good">好评88% 59531人</span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                <img src="img/img.png" alt="">
+                <div class="fr">
+                    <p>苹果（Apple）iPhone 6(A1586) <br>16GB 金色 移动联通电信4G手机</p>
+                    <span id="price">￥3888.00<br></span>
+                    <span id="good">好评88% 59531人</span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                <img src="img/img.png" alt="">
+                <span class="fr">
+                    <p id="sTip">苹果（Apple）iPhone 6(A1586) <br>16GB 金色 移动联通电信4G手机</p>
+                    <span id="price">￥4888.00<br></span>
+                    <span id="good">好评96% 59091人</span>
+                </span>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                <img src="img/img.png" alt="">
+                <div class="fr">
+                    <p>苹果（Apple）iPhone 6(A1586) <br>16GB 金色 移动联通电信4G手机</p>
+                    <span id="price">￥4638.00<br></span>
+                    <span id="good">好评96% 59091人</span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                <img src="img/img.png" alt="">
+                <div class="fr">
+                    <p>苹果（Apple）iPhone 6(A1586) <br>16GB 金色 移动联通电信4G手机</p>
+                    <span id="price">￥4133.00<br></span>
+                    <span id="good">好评96% 59091人</span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                <img src="img/img.png" alt="">
+                <div class="fr">
+                    <p>苹果（Apple）iPhone 6(A1586) <br>16GB 金色 移动联通电信4G手机</p>
+                    <span id="price">￥3980.00<br></span>
+                    <span id="good">好评96% 59091人</span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                <img src="img/img.png" alt="">
+                <div class="fr">
+                    <p>苹果（Apple）iPhone 6(A1586) <br>16GB 金色 移动联通电信4G手机</p>
+                    <span id="price">￥3888.00<br></span>
+                    <span id="good">好评88% 59531人</span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                <img src="img/img.png" alt="">
+                <div class="fr">
+                    <p>苹果（Apple）iPhone 6(A1586) <br>16GB 金色 移动联通电信4G手机</p>
+                    <span id="price">￥3888.00<br></span>
+                    <span id="good">好评88% 59531人</span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                <img src="img/img.png" alt="">
+                <div class="fr">
+                    <p>苹果（Apple）iPhone 6(A1586) <br>16GB 金色 移动联通电信4G手机</p>
+                    <span id="price">￥3888.00<br></span>
+                    <span id="good">好评88% 59531人</span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                <img src="img/img.png" alt="">
+                <div class="fr">
+                    <p>苹果（Apple）iPhone 6(A1586) <br>16GB 金色 移动联通电信4G手机</p>
+                    <span id="price">￥3888.00<br></span>
+                    <span id="good">好评88% 59531人</span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                <img src="img/img.png" alt="">
+                <div class="fr">
+                    <p>苹果（Apple）iPhone 6(A1586) <br>16GB 金色 移动联通电信4G手机</p>
+                    <span id="price">￥3888.00<br></span>
+                    <span id="good">好评88% 59531人</span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                <img src="img/img.png" alt="">
+                <div class="fr">
+                    <p>苹果（Apple）iPhone 6(A1586) <br>16GB 金色 移动联通电信4G手机</p>
+                    <span id="price">￥3888.00<br></span>
+                    <span id="good">好评88% 59531人</span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                <img src="img/img.png" alt="">
+                <div class="fr">
+                    <p>苹果（Apple）iPhone 6(A1586) <br>16GB 金色 移动联通电信4G手机</p>
+                    <span id="price">￥3888.00<br></span>
+                    <span id="good">好评88% 59531人</span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                <img src="img/img.png" alt="">
+                <span class="fr">
+                    <p id="sTip">苹果（Apple）iPhone 6(A1586) <br>16GB 金色 移动联通电信4G手机</p>
+                    <span id="price">￥4888.00<br></span>
+                    <span id="good">好评96% 59091人</span>
+                </span>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                <img src="img/img.png" alt="">
+                <div class="fr">
+                    <p>苹果（Apple）iPhone 6(A1586) <br>16GB 金色 移动联通电信4G手机</p>
+                    <span id="price">￥4638.00<br></span>
+                    <span id="good">好评96% 59091人</span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                <img src="img/img.png" alt="">
+                <div class="fr">
+                    <p>苹果（Apple）iPhone 6(A1586) <br>16GB 金色 移动联通电信4G手机</p>
+                    <span id="price">￥4133.00<br></span>
+                    <span id="good">好评96% 59091人</span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                <img src="img/img.png" alt="">
+                <div class="fr">
+                    <p>苹果（Apple）iPhone 6(A1586) <br>16GB 金色 移动联通电信4G手机</p>
+                    <span id="price">￥3980.00<br></span>
+                    <span id="good">好评96% 59091人</span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                <img src="img/img.png" alt="">
+                <div class="fr">
+                    <p>苹果（Apple）iPhone 6(A1586) <br>16GB 金色 移动联通电信4G手机</p>
+                    <span id="price">￥3888.00<br></span>
+                    <span id="good">好评88% 59531人</span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                <img src="img/img.png" alt="">
+                <div class="fr">
+                    <p>苹果（Apple）iPhone 6(A1586) <br>16GB 金色 移动联通电信4G手机</p>
+                    <span id="price">￥3888.00<br></span>
+                    <span id="good">好评88% 59531人</span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                <img src="img/img.png" alt="">
+                <div class="fr">
+                    <p>苹果（Apple）iPhone 6(A1586) <br>16GB 金色 移动联通电信4G手机</p>
+                    <span id="price">￥3888.00<br></span>
+                    <span id="good">好评88% 59531人</span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                <img src="img/img.png" alt="">
+                <div class="fr">
+                    <p>苹果（Apple）iPhone 6(A1586) <br>16GB 金色 移动联通电信4G手机</p>
+                    <span id="price">￥3888.00<br></span>
+                    <span id="good">好评88% 59531人</span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                <img src="img/img.png" alt="">
+                <div class="fr">
+                    <p>苹果（Apple）iPhone 6(A1586) <br>16GB 金色 移动联通电信4G手机</p>
+                    <span id="price">￥3888.00<br></span>
+                    <span id="good">好评88% 59531人</span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                <img src="img/img.png" alt="">
+                <div class="fr">
+                    <p>苹果（Apple）iPhone 6(A1586) <br>16GB 金色 移动联通电信4G手机</p>
+                    <span id="price">￥3888.00<br></span>
+                    <span id="good">好评88% 59531人</span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                <img src="img/img.png" alt="">
+                <div class="fr">
+                    <p>苹果（Apple）iPhone 6(A1586) <br>16GB 金色 移动联通电信4G手机</p>
+                    <span id="price">￥3888.00<br></span>
+                    <span id="good">好评88% 59531人</span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                <img src="img/img.png" alt="">
+                <span class="fr">
+                    <p id="sTip">苹果（Apple）iPhone 6(A1586) <br>16GB 金色 移动联通电信4G手机</p>
+                    <span id="price">￥4888.00<br></span>
+                    <span id="good">好评96% 59091人</span>
+                </span>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                <img src="img/img.png" alt="">
+                <div class="fr">
+                    <p>苹果（Apple）iPhone 6(A1586) <br>16GB 金色 移动联通电信4G手机</p>
+                    <span id="price">￥4638.00<br></span>
+                    <span id="good">好评96% 59091人</span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                <img src="img/img.png" alt="">
+                <div class="fr">
+                    <p>苹果（Apple）iPhone 6(A1586) <br>16GB 金色 移动联通电信4G手机</p>
+                    <span id="price">￥4133.00<br></span>
+                    <span id="good">好评96% 59091人</span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                <img src="img/img.png" alt="">
+                <div class="fr">
+                    <p>苹果（Apple）iPhone 6(A1586) <br>16GB 金色 移动联通电信4G手机</p>
+                    <span id="price">￥3980.00<br></span>
+                    <span id="good">好评96% 59091人</span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                <img src="img/img.png" alt="">
+                <div class="fr">
+                    <p>苹果（Apple）iPhone 6(A1586) <br>16GB 金色 移动联通电信4G手机</p>
+                    <span id="price">￥3888.00<br></span>
+                    <span id="good">好评88% 59531人</span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                <img src="img/img.png" alt="">
+                <div class="fr">
+                    <p>苹果（Apple）iPhone 6(A1586) <br>16GB 金色 移动联通电信4G手机</p>
+                    <span id="price">￥3888.00<br></span>
+                    <span id="good">好评88% 59531人</span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                <img src="img/img.png" alt="">
+                <div class="fr">
+                    <p>苹果（Apple）iPhone 6(A1586) <br>16GB 金色 移动联通电信4G手机</p>
+                    <span id="price">￥3888.00<br></span>
+                    <span id="good">好评88% 59531人</span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                <img src="img/img.png" alt="">
+                <div class="fr">
+                    <p>苹果（Apple）iPhone 6(A1586) <br>16GB 金色 移动联通电信4G手机</p>
+                    <span id="price">￥3888.00<br></span>
+                    <span id="good">好评88% 59531人</span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                <img src="img/img.png" alt="">
+                <div class="fr">
+                    <p>苹果（Apple）iPhone 6(A1586) <br>16GB 金色 移动联通电信4G手机</p>
+                    <span id="price">￥3888.00<br></span>
+                    <span id="good">好评88% 59531人</span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                <img src="img/img.png" alt="">
+                <div class="fr">
+                    <p>苹果（Apple）iPhone 6(A1586) <br>16GB 金色 移动联通电信4G手机</p>
+                    <span id="price">￥3888.00<br></span>
+                    <span id="good">好评88% 59531人</span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                <img src="img/img.png" alt="">
+                <div class="fr">
+                    <p>苹果（Apple）iPhone 6(A1586) <br>16GB 金色 移动联通电信4G手机</p>
+                    <span id="price">￥3888.00<br></span>
+                    <span id="good">好评88% 59531人</span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                <img src="img/img.png" alt="">
+                <span class="fr">
+                    <p id="sTip">苹果（Apple）iPhone 6(A1586) <br>16GB 金色 移动联通电信4G手机</p>
+                    <span id="price">￥4888.00<br></span>
+                    <span id="good">好评96% 59091人</span>
+                </span>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                <img src="img/img.png" alt="">
+                <div class="fr">
+                    <p>苹果（Apple）iPhone 6(A1586) <br>16GB 金色 移动联通电信4G手机</p>
+                    <span id="price">￥4638.00<br></span>
+                    <span id="good">好评96% 59091人</span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                <img src="img/img.png" alt="">
+                <div class="fr">
+                    <p>苹果（Apple）iPhone 6(A1586) <br>16GB 金色 移动联通电信4G手机</p>
+                    <span id="price">￥4133.00<br></span>
+                    <span id="good">好评96% 59091人</span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                <img src="img/img.png" alt="">
+                <div class="fr">
+                    <p>苹果（Apple）iPhone 6(A1586) <br>16GB 金色 移动联通电信4G手机</p>
+                    <span id="price">￥3980.00<br></span>
+                    <span id="good">好评96% 59091人</span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                <img src="img/img.png" alt="">
+                <div class="fr">
+                    <p>苹果（Apple）iPhone 6(A1586) <br>16GB 金色 移动联通电信4G手机</p>
+                    <span id="price">￥3888.00<br></span>
+                    <span id="good">好评88% 59531人</span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                <img src="img/img.png" alt="">
+                <div class="fr">
+                    <p>苹果（Apple）iPhone 6(A1586) <br>16GB 金色 移动联通电信4G手机</p>
+                    <span id="price">￥3888.00<br></span>
+                    <span id="good">好评88% 59531人</span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                <img src="img/img.png" alt="">
+                <div class="fr">
+                    <p>苹果（Apple）iPhone 6(A1586) <br>16GB 金色 移动联通电信4G手机</p>
+                    <span id="price">￥3888.00<br></span>
+                    <span id="good">好评88% 59531人</span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                <img src="img/img.png" alt="">
+                <div class="fr">
+                    <p>苹果（Apple）iPhone 6(A1586) <br>16GB 金色 移动联通电信4G手机</p>
+                    <span id="price">￥3888.00<br></span>
+                    <span id="good">好评88% 59531人</span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                <img src="img/img.png" alt="">
+                <div class="fr">
+                    <p>苹果（Apple）iPhone 6(A1586) <br>16GB 金色 移动联通电信4G手机</p>
+                    <span id="price">￥3888.00<br></span>
+                    <span id="good">好评88% 59531人</span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                <img src="img/img.png" alt="">
+                <div class="fr">
+                    <p>苹果（Apple）iPhone 6(A1586) <br>16GB 金色 移动联通电信4G手机</p>
+                    <span id="price">￥3888.00<br></span>
+                    <span id="good">好评88% 59531人</span>
                 </div>
             </a>
         </li>
