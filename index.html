@@ -8,12 +8,13 @@
     <link rel="stylesheet" href="bs/bootstrap.css">
     <script type="text/javascript" src="m.Tween.js"></script>
     <script>
-        (function(){
+        setRem();
+        window.addEventListener('orientation' in window?"deviceorientation":"resize",setRem);
+        function setRem(){
             var html = document.documentElement;
             var hWidth = html.getBoundingClientRect().width;
             html.style.fontSize = hWidth/15 + "px";
-            console.log(html.style.fontSize)
-        })()
+        }
         document.addEventListener('touchstart', function(e) {
             e.preventDefault();
         });
